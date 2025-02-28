@@ -1,0 +1,4 @@
+com\Email\service\EmailService.class
+com\Email\Dto\EmailRequest.class
+com\Email\controller\EmailController.class
+com\Email\EmailServiceApplication.class
