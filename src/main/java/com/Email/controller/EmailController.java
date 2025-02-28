@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import com.Email.Dto.EmailRequest;
 import com.Email.service.EmailService;
 
+
 @RestController
+@CrossOrigin(origins = "*")
 public class EmailController {
 	
     @Autowired
