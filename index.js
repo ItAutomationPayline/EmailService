@@ -17,8 +17,8 @@ app.post("/send-email", async (req, res) => {
         port: 587,                   // SMTP Port
         secure: false,               // Must be false for Office 365
         auth: {
-            user: process.env.EMAIL_USER, // Your Office 365 email
-            pass: process.env.EMAIL_PASS, // App password or real password
+            user: process.env.SMTP_USER, // Your Office 365 email
+            pass: process.env.SMTP_PASS, // App password or real password
         },
         tls: {
             ciphers: "SSLv3",
