@@ -1,10 +1,21 @@
 const express = require('express');
 const { sendEmail } = require('./emailService');
-const cors = require('cors');
+
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+    // Handle preflight OPTIONS request
+    if (req.method === "OPTIONS") {
+        return res.sendStatus(200);
+    }
+    
+    next();
+});
 // Middleware to parse JSON requests
 app.use(express.json());
 
