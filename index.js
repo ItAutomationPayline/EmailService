@@ -4,9 +4,10 @@ const { sendEmail } = require('./emailService');
 const app = express();
 const PORT = 3000;
 
-app.use(cors());
+
 // Middleware to parse JSON requests
 app.use(express.json());
+app.use(cors());
 
 // API Endpoint for sending emails
 app.post('/send-email', async (req, res) => {
