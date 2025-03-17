@@ -8,23 +8,32 @@ app.use(express.json());
 app.post("/send-email", async (req, res) => {
     const { to, subject, text } = req.body;
 
+    if (!Array.isArray(to) || to.length === 0) {
+        return res.status(400).json({ error: "Recipient email list must be a non-empty array" });
+    }
+
     const transporter = nodemailer.createTransport({
-        service: "gmail",
+        host: "smtp.office365.com",  // Office 365 SMTP host
+        port: 587,                   // SMTP Port
+        secure: false,               // Must be false for Office 365
         auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
+            user: process.env.EMAIL_USER, // Your Office 365 email
+            pass: process.env.EMAIL_PASS, // App password or real password
+        },
+        tls: {
+            ciphers: "SSLv3",
         },
     });
 
     try {
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
-            to,
+            to: to.join(","), // Convert array to comma-separated string
             subject,
             text,
         });
 
-        res.status(200).json({ message: "Email sent successfully" });
+        res.status(200).json({ message: "Emails sent successfully" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
