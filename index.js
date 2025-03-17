@@ -8,7 +8,7 @@ app.use(express.json());
 app.post("/send-email", async (req, res) => {
     const { recipients, subject, body } = req.body;
 
-    if (!Array.isArray(recipients) || to.length === 0) {
+    if (!Array.isArray(recipients) || recipients.length === 0) {
         return res.status(400).json({ error: "Recipient email list must be a non-empty array" });
     }
 
@@ -27,10 +27,10 @@ app.post("/send-email", async (req, res) => {
 
     try {
         await transporter.sendMail({
-            from: process.env.EMAIL_USER,
+            from: process.env.SMTP_USER,
             to: recipients.join(","), // Convert array to comma-separated string
             subject,
-            text:body,
+            text: body, // Replacing `text` with `body`
         });
 
         res.status(200).json({ message: "Emails sent successfully" });
